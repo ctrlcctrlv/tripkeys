@@ -1,0 +1,3 @@
+[submodule "scrypt-js"]
+	path = vendor/scrypt-js
+	url = https://github.com/ricmoo/scrypt-js
