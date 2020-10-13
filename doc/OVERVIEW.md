@@ -46,7 +46,7 @@ Below I'll show simple ways you can verify every step right in your browser. Of 
 
 &dagger; The famous `bitaddress` (pointbiz/bitaddress.org, MIT) can do this. Press &laquo;Wallet Details&raquo;, then paste the hex: `31e76cbc7d3e8095f08bb9771877ca3d759521e5898ea618ed5015480665f3a4` in the &laquo;Enter Private Key&raquo; field. Press &laquo;View Details&raquo;, then scroll down and copy &laquo;Private Key WIF Compressed&raquo;.
 
-&Dagger; We can use [`segwitaddress`](https://segwitaddress.org/bech32/) (coinables/segwitaddress, unknown), which internally uses `bitcoinjs-lib`'s bitcoin.ECLib for this purpose (bitcoinjs/bitcoinjs-lib, MIT). Scroll down to &sect; Details, and in the &laquo;WIF Private Key&raquo; field, paste `KxtiajhLq5EUdSUHMpWjd5iUS3o5X3x7psC7uJyY897rfKUeaQZU`. Press &laquo;Show Details&raquo;, and copy the &laquo;Address&raquo;.
+&Dagger; We can use [`segwitaddress`](https://segwitaddress.org/bech32/) (coinables/segwitaddress, MIT), which internally uses `bitcoinjs-lib`'s bitcoin.ECLib for this purpose (bitcoinjs/bitcoinjs-lib, MIT). Scroll down to &sect; Details, and in the &laquo;WIF Private Key&raquo; field, paste `KxtiajhLq5EUdSUHMpWjd5iUS3o5X3x7psC7uJyY897rfKUeaQZU`. Press &laquo;Show Details&raquo;, and copy the &laquo;Address&raquo;.
 </small>
 
 ### `tripkeyPBKDF`
