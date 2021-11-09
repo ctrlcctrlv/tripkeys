@@ -30,12 +30,12 @@ Anonymous enters their name followed by their tripkey, exactly as they would a r
 
 That's it. We do all of the following behind the scenes:
 
-* The browser uses the `tripkeyPBKDF`, a very simple, standardized password-based key derivation function explained below, to go from `IAmASecretAgentMan` to a private key containing the right number of bytes to become a Bitcoin private key. For `IAmASecretAgentMan`, `tripkeyPBKDF` yields the bytes `31:e7:6c:bc:7d:3e:80:95:f0:8b:b9:77:18:77:ca:3d:75:95:21:e5:89:8e:a6:18:ed:50:15:48:06:65:f3:a4`; these are exactly enough bytes.&#x2a;
-* We use the output of `tripkeyPBKDF` as our private key. We can convert even convert the hex to wallet input format: `KxtiajhLq5EUdSUHMpWjd5iUS3o5X3x7psC7uJyY897rfKUeaQZU`.&dagger;
-* With our private key, we now can get the bech32 address (public key): `bc1qav0jadp87tr0thmkav4gfq2hudfqrdyt07dlk4`. We almost have the user's tripkey!&Dagger;
-* Simply replace the beginning `bc1q`, which is constant, with `!!!`. Tripkey: `!!!av0jadp87tr0thmkav4gfq2hudfqrdyt07dlk4`.
+* The browser uses the `tripkeyPBKDF`, a very simple, standardized password-based key derivation function explained below, to go from `IAmASecretAgentMan` to a private key containing the right number of bytes to become a Bitcoin private key. For `IAmASecretAgentMan`, assuming an Ethereum block height of 13,584,294 (`0x0dc9487420b525c26b8ace288e6473f0ae12aa79c83bf2a38c1a3580a49e9a10`, encoded base 80 with charset U+0400–U+044F yielding salt `ХЪОЬЦйЬЀфхЕУвБъзІФгуЧЙхайЩЋкътЪИбМЂСЮпнЀ`), `tripkeyPBKDF` yields the bytes `31:e5:fb:55:c4:a5:3c:d4:a2:97:ff:84:86:28:f3:c6:29:42:0f:d5:fd:22:e1:58:c6:88:65:cd:1b:32:7e:3e`; these are exactly enough bytes.&#x2a;
+* We use the output of `tripkeyPBKDF` as our private key. We can convert even convert the hex to wallet input format: `KxthwstFj9JQ7co2NiBEKhNbnW57tJ4trbyBggu9DHQiik3HZ7pY`.&dagger;
+* With our private key, we now can get the bech32 address (public key): `bc1qhw8yd9knu7y2mg737dkkfl3h7dlhvzd5wgp2x0`. We almost have the user's tripkey!&Dagger;
+* Simply replace the beginning `bc1q`, which is constant, with `!!!`. Tripkey: `!!!hw8yd9knu7y2mg737dkkfl3h7dlhvzd5wgp2x0`.
 
-When the user presses &laquo;Post&raquo;, all of this happens, and their post will show up under `SecretSpy !!!av0jadp87tr0thmkav4gfq2hudfqrdyt07dlk4`! And, furthermore, other users who may or may not trust your server can verify this key: they can copy the generated tripsig, e.g. `ICpkJ3fZRWp87zPZ7gOpw/4kvK4Ew+ihemsZxHMLZPM0sdZu/82GEHCzaNqs4Qmiu+idLG0ypKydVKEUQz6NQOg=`, and the input JSON (see &sect; tripinput) and use the command line tripsig verification tool to know that nothing was tampered with, that this tripkey really did produce this message!
+When the user presses &laquo;Post&raquo;, all of this happens, and their post will show up under `SecretSpy !!!hw8yd9knu7y2mg737dkkfl3h7dlhvzd5wgp2x0`! And, furthermore, other users who may or may not trust your server can verify this key: they can copy the generated tripsig, e.g. `IJsIaeN/cgn5vrrJgCzUUj6KTwDxwGaIHo5zV60P34gzcNPO+hHqqE29K0o6Z+aTQR+/YkFEj+HF32+M8XOUSsk=`, and the input JSON (see &sect; tripinput) and use the command line tripsig verification tool to know that nothing was tampered with, that this tripkey really did produce this message!
 
 ----
 
@@ -44,9 +44,9 @@ Below I'll show simple ways you can verify every step right in your browser. Of 
 
 &#x2a; My `tripkeyPBKDF` function is so simple we can recreate its behavior with [the generic `scrypt-js` demo](https://ricmoo.github.io/scrypt-js/) (ricmoo/scrypt-js, MIT). For password, `IAmASecretAgentMan`. For salt, `naMtnegAterceSAmAI` (reversed password). For **Nlog2**, 12. **r**, 8. **p**, 1. dkLen, **32**. Output will include ``Generated: 31e76cbc7d3e8095f08bb9771877ca3d759521e5898ea618ed5015480665f3a4``. Make sure both password and salt are set to `UTF-8 (NFKC)`.
 
-&dagger; The famous `bitaddress` (pointbiz/bitaddress.org, MIT) can do this. Press &laquo;Wallet Details&raquo;, then paste the hex: `31e76cbc7d3e8095f08bb9771877ca3d759521e5898ea618ed5015480665f3a4` in the &laquo;Enter Private Key&raquo; field. Press &laquo;View Details&raquo;, then scroll down and copy &laquo;Private Key WIF Compressed&raquo;.
+&dagger; The famous `bitaddress` (pointbiz/bitaddress.org, MIT) can do this. Press &laquo;Wallet Details&raquo;, then paste the hex: `31e5fb55c4a53cd4a297ff848628f3c629420fd5fd22e158c68865cd1b327e3e` in the &laquo;Enter Private Key&raquo; field. Press &laquo;View Details&raquo;, then scroll down and copy &laquo;Private Key WIF Compressed&raquo;.
 
-&Dagger; We can use [`segwitaddress`](https://segwitaddress.org/bech32/) (coinables/segwitaddress, MIT), which internally uses `bitcoinjs-lib`'s bitcoin.ECLib for this purpose (bitcoinjs/bitcoinjs-lib, MIT). Scroll down to &sect; Details, and in the &laquo;WIF Private Key&raquo; field, paste `KxtiajhLq5EUdSUHMpWjd5iUS3o5X3x7psC7uJyY897rfKUeaQZU`. Press &laquo;Show Details&raquo;, and copy the &laquo;Address&raquo;.
+&Dagger; We can use [`segwitaddress`](https://segwitaddress.org/bech32/) (coinables/segwitaddress, MIT), which internally uses `bitcoinjs-lib`'s bitcoin.ECLib for this purpose (bitcoinjs/bitcoinjs-lib, MIT). Scroll down to &sect; Details, and in the &laquo;WIF Private Key&raquo; field, paste `KxthwstFj9JQ7co2NiBEKhNbnW57tJ4trbyBggu9DHQiik3HZ7pY`. Press &laquo;Show Details&raquo;, and copy the &laquo;Address&raquo;.
 </small>
 
 ### `tripkeyPBKDF`
@@ -59,7 +59,7 @@ Below I'll show simple ways you can verify every step right in your browser. Of 
 |-------|---|---|-------|
 | 12    | 8 | 1 | 32    |
 
-The only thing you might hesitate about is how we're getting our salt. We simply _reverse_ the password. So, given `IAmASecretAgentMan`, our salt will be `naMtnegAterceSAmAI`. I believe this is secure for many reasons. For one thing, in scrypt, this does not need to be a secret salt. It just needs to be different for every invocation to prevent rainbow table attacks. Clearly, just reversing the password is good enough unless someone can prove otherwise.
+Previously we were getting our salt in a possibly breakable way, that way is deprecated and no longer documented (feel free to look at Git history). I couldn't think of a source of random data external from the server which all users agree upon. But then I thought of one: recent hashes of Ethereum blocks. For the purposes of `tripkeyPBKDF`, the hash of any of the 25 latest Ethereum blocks may be used to generate the user's salt. This is doable right in the browser, and everyone agrees on Ethereum block hashes.
 
 ## Making the key unspendable
 
@@ -76,10 +76,10 @@ In future, we may want to slightly modify the constants for tripkey generation s
 Let's say that a hypothetical nerdier user wants to take advantage of some of the benefits of being able to use any Bitcoin private key. Instead of posting as `SecretSpy###IAmASecretAgentMan`, they instead will post with their name fields like this:
 
 ```plain
-SecretSpy!!!av0jadp87tr0thmkav4gfq2hudfqrdyt07dlk4!!!H169+GZtHROqos8hONufnLfE6TPOHZXxVgx/4j07zb2e4opThngxx6VkY4yX2bHHg/DgedIiGVAHERW2KH87bjs=
+SecretSpy!!!hw8yd9knu7y2mg737dkkfl3h7dlhvzd5wgp2x0!!!IJsIaeN/cgn5vrrJgCzUUj6KTwDxwGaIHo5zV60P34gzcNPO+hHqqE29K0o6Z+aTQR+/YkFEj+HF32+M8XOUSsk=
 ```
 
-And your server will verify that the signature ``H169+GZtHROqos8hONufnLfE6TPOHZXxVgx/4j07zb2e4opThngxx6VkY4yX2bHHg/DgedIiGVAHERW2KH87bjs=`` works for their message, and allow the post through.
+And your server will verify that the signature ``IJsIaeN/cgn5vrrJgCzUUj6KTwDxwGaIHo5zV60P34gzcNPO+hHqqE29K0o6Z+aTQR+/YkFEj+HF32+M8XOUSsk=`` works for their message, and allow the post through.
 
 Now, of course, we need to prevent replay attacks! If this is all there is to it, users may impersonate tripkey users by posting their messages. They won't be able to post any message the tripkey user didn't write, but with a sufficiently large corpus could easily troll tripkey users by playing their posts back at them.
 
